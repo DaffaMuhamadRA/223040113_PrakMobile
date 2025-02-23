@@ -1,6 +1,7 @@
 package id.ac.unpas.hellocompose
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -10,6 +11,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -37,6 +39,7 @@ class MainActivity : ComponentActivity() {
 fun FormLogin(modifier: Modifier = Modifier) {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    val context = LocalContext.current
 
     Column(modifier = modifier.fillMaxWidth().padding(16.dp)) {
         Text(text = "Username", modifier = Modifier.padding(4.dp))
@@ -87,7 +90,11 @@ fun FormLogin(modifier: Modifier = Modifier) {
             Button(
                 modifier = Modifier.weight(1f),
                 onClick = {
-                    // Handle login action
+                    if (username == "admin" && password == "admin") {
+                        Toast.makeText(context, "Login Sukses", Toast.LENGTH_LONG).show()
+                    } else {
+                        Toast.makeText(context, "Login Gagal", Toast.LENGTH_LONG).show()
+                    }
                 },
                 colors = loginButtonColors
             ) {
